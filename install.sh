@@ -5,6 +5,7 @@ echo 'Attention: Check if you are connected to the insternet before using this s
 read _
 echo 'Attention: Partition disks before using this script [ENTER]'
 read _
+cd /
 
 # === Parameters ===
 KEYBOARD_LAYOUT=us
@@ -19,7 +20,7 @@ loadkeys $KEYBOARD_LAYOUT
 timedatectl set-ntp true
 
 # === Partitioning ===
-echo 'This are your disks'
+echo 'These are your disks'
 fdisk -l
 echo ""
 # Root partition /
@@ -69,29 +70,5 @@ pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # chroot
-arch-chroot /mnt
-
-# Time Zone
-# TODO
-hwclock --systohc
-
-# Localization
-# TODO
-locale-gen
-echo "LANG=en_US.UTF-8"         >> /etc/locale.conf
-echo "KEYMAP=$KEYBOARD_LAYOUT"  >> /etc/vconsole.conf 
-
-# /etc/hostname
-echo "$u_HOSTNAME" >> /etc/hostname
-
-# /etc/hosts
-echo "127.0.0.1	localhost"                           >> /etc/hosts
-echo "::1		localhost"                           >> /etc/hosts
-echo "127.0.1.1	$u_HOSTNAME.localdomain	$u_HOSTNAME" >> /etc/hosts
-
-# Initramfs
-mkinitcpio -P
-
-# Root Password
-echo "--- ROOT PASSWORD ---"
-passwd
+cp chroot-install.sh /mnt/chroot-install.sh
+arch-chroot /mnt ./chroot-install.sh
