@@ -19,10 +19,6 @@ echo "127.0.1.1	$u_HOSTNAME.localdomain	$u_HOSTNAME" >> /etc/hosts
 # Initramfs
 mkinitcpio -P
 
-# Root Password
-echo "--- ROOT PASSWORD ---"
-passwd
-
 # Micro-code
 pacman -S amd-ucode intel-ucode
 
@@ -30,3 +26,7 @@ pacman -S amd-ucode intel-ucode
 pacman -S grub efibootmgr os-prober ntfs-3g
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
+
+# Root Password
+echo "--- ROOT PASSWORD ---"
+passwd
