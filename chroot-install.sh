@@ -23,4 +23,10 @@ mkinitcpio -P
 echo "--- ROOT PASSWORD ---"
 passwd
 
-# Boot Loader
+# Micro-code
+pacman -S amd-ucode intel-ucode
+
+# Boot Loader (GRUB)
+pacman -S grub efibootmgr os-prober ntfs-3g
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg

@@ -37,7 +37,7 @@ fi
 
 
 # === Formating ===
-mkfs.ext4 $root_partition
+mkfs.btrfs -L $u_HOSTNAME $root_partition
 if [ $use_swap == "y" ] 
 then
     mkswap $swap_partition
@@ -70,5 +70,5 @@ pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # chroot
-cp chroot-install.sh /mnt/chroot-install.sh
+cp toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
 arch-chroot /mnt ./chroot-install.sh

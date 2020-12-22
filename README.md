@@ -23,5 +23,5 @@ Aí é só responder as perguntas do script
 
 ## Detalhes da instalação
 
-* Bootloader: 
-* 
+* Bootloader: GRUB
+* Sistema de Arquivos: 
