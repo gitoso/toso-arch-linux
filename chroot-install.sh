@@ -26,6 +26,11 @@ echo "127.0.0.1	localhost"                           >> /etc/hosts
 echo "::1		localhost"                           >> /etc/hosts
 echo "127.0.1.1	$u_HOSTNAME.localdomain	$u_HOSTNAME" >> /etc/hosts
 
+# NetworkManager
+pacman -S --noconfirm networkmanager nm-connection-editor network-manager-applet
+systemctl enable NetworkManager.service
+systemctl start NetworkManager.service
+
 # Initramfs
 mkinitcpio -P
 
@@ -51,17 +56,18 @@ sed -i '/#\[multilib\]/{N;s/\n#/\n/;P;D}' /etc/pacman.conf
 sed -i "s/#\[multilib\]/\[multilib\]/g"   /etc/pacman.conf
 
 # Driver install
-pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+#pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+pacman -Sy --noconfirm xf86-video-intel mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver libva-intel-driver
 
-# GUI
-pacman -S --noconfirm xorg xorg-xinit i3 dmenu
+# GUI and User Utilities
+pacman -S --noconfirm xorg xorg-xinit i3 dmenu xdg-user-dirs
 
 # Utilities (for Dotfiles)
 pacman -S --noconfirm vim git
 
-# Dotfiles
-su $u_USERNAME
-git clone https://github.com/gitoso/dotfiles Dotfiles
+# Call user config script
+cp user-install.sh /home/$u_USERNAME/user-install.sh
+su - $u_USERNAME -c "./user-install.sh"
 
 # End installation
-#exit
+exit
