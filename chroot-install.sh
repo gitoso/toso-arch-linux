@@ -1,6 +1,12 @@
+# === Parameters ===
+KEYBOARD_LAYOUT=us
+KEYBOARD_VARIANT=altgr-intl
+u_HOSTNAME=TESTE
+u_USERNAME=gitoso
+
 # === User Config ===
-read -p "System Hostname: " u_HOSTNAME
-read -p "Username: " u_USERNAME
+#read -p "System Hostname: " u_HOSTNAME
+#read -p "Username: " u_USERNAME
 
 # Time Zone
 ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
@@ -48,7 +54,14 @@ sed -i "s/#\[multilib\]/\[multilib\]/g"   /etc/pacman.conf
 pacman -S --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 
 # GUI
+pacman -S --noconfirm xorg xorg-xinit i3 dmenu
 
+# Utilities (for Dotfiles)
+pacman -S --noconfirm vim git
+
+# Dotfiles
+su $u_USERNAME
+git clone https://github.com/gitoso/dotfiles Dotfiles
 
 # End installation
-exit
+#exit

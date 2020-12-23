@@ -70,4 +70,4 @@ cp /root/toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
 arch-chroot /mnt ./chroot-install.sh
 
 # reboot
-reboot
+#reboot
