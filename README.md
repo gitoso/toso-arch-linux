@@ -8,8 +8,20 @@ Esse script de instalação faz algumas suposições:
 * Supõe que o sistema será instalado no modo UEFI
 * Também supõe que o seu disco já esteja formatado em um esquema com uma partição para o EFI, uma para o sistema e opcionalmente uma para swap
 
-## Instalação
+## Instalação (Sistema Base)
 
+### Detalhes da instalação
+
+O sistema base é composto de:
+* Bootloader: GRUB
+* Sistema de Arquivos: BRTFS
+* Servidor gráfico: X.Org
+* Window Manager: i3-gaps
+* Shell: Zsh
+    * Com framework oh-my-zsh
+    * Com tema ...
+
+### Instruções
 Bootar uma .iso do Arch e executar:
 
 ```
@@ -21,7 +33,5 @@ cd toso-arch-install
 
 Aí é só responder as perguntas do script
 
-## Detalhes da instalação
-
-* Bootloader: GRUB
-* Sistema de Arquivos: 
+## Instalação dos Apps
+TODO

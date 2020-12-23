@@ -11,10 +11,6 @@ cd /
 KEYBOARD_LAYOUT=us
 KEYBOARD_VARIANT=altgr-intl
 
-# === User Parameters ===
-read -p "System Hostname: " u_HOSTNAME
-read -p "Username: " u_USERNAME
-
 # === Instalation ===
 loadkeys $KEYBOARD_LAYOUT
 timedatectl set-ntp true
@@ -70,5 +66,8 @@ pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # chroot
-cp toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
+cp /root/toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
 arch-chroot /mnt ./chroot-install.sh
+
+# reboot
+reboot
