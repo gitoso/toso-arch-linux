@@ -51,7 +51,7 @@ sed -i '/#\[multilib\]/{N;s/\n#/\n/;P;D}' /etc/pacman.conf
 sed -i "s/#\[multilib\]/\[multilib\]/g"   /etc/pacman.conf
 
 # Driver install
-pacman -S --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 
 # GUI
 pacman -S --noconfirm xorg xorg-xinit i3 dmenu

@@ -33,7 +33,7 @@ fi
 
 
 # === Formating ===
-mkfs.btrfs -L $u_HOSTNAME $root_partition
+mkfs.btrfs -f -L ArchLinux $root_partition
 if [ $use_swap == "y" ] 
 then
     mkswap $swap_partition

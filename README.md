@@ -25,7 +25,7 @@ O sistema base é composto de:
 Bootar uma .iso do Arch e executar:
 
 ```
-pacman -Sy && pacman -S git
+pacman -Sy git
 git clone http://github.com/gitoso/toso-arch-linux
 cd toso-arch-install
 ./install.sh
