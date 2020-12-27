@@ -59,13 +59,15 @@ sed -i "s/#\[multilib\]/\[multilib\]/g"   /etc/pacman.conf
 #pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 pacman -Sy --noconfirm xf86-video-intel mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver libva-intel-driver
 
-# GUI and User Utilities
-pacman -S --noconfirm xorg xorg-xinit i3 dmenu xdg-user-dirs
+# Sudo install & config
+pacman -S --noconfirm sudo
+echo "$u_USERNAME ALL=(ALL) ALL" >> /etc/sudoers
 
-# Utilities (for Dotfiles)
+# Utilities install
 pacman -S --noconfirm vim git
 
 # Call user config script
+chown $u_USERNAME user-install.sh
 cp user-install.sh /home/$u_USERNAME/user-install.sh
 su - $u_USERNAME -c "./user-install.sh"
 
