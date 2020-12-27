@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # === Disclaimers ===
-echo 'Attention: Check if you are connected to the insternet before using this script [ENTER]'
-read _
-echo 'Attention: Partition disks before using this script [ENTER]'
+echo 'Attention: Check if you are connected to the insternet before using this script'
+echo 'Attention: Partition disks before using this script'
+echo 'Press [ENTER] to continue'
 read _
 cd /
 

@@ -1,8 +1,8 @@
 # GUI and User Utilities
-pacman -S --noconfirm xorg xorg-xinit i3 dmenu xdg-user-dirs
+sudo pacman -S --noconfirm xorg xorg-xinit i3 dmenu xdg-user-dirs
 
 # Dotfiles
-su $u_USERNAME
+cd ~/
 git clone https://github.com/gitoso/dotfiles Dotfiles
 cd Dotfiles
 
