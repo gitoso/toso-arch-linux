@@ -43,7 +43,7 @@ pacman -S --noconfirm amd-ucode intel-ucode
 
 # Boot Loader (GRUB)
 pacman -S --noconfirm grub efibootmgr os-prober ntfs-3g
-grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+grub-install --target=i386-pc $ROOTPART
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # User management

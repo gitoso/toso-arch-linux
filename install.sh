@@ -68,7 +68,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # chroot
 cp /root/toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
 cp /root/toso-arch-linux/user-install.sh /mnt/user-install.sh
-arch-chroot /mnt ./chroot-install.sh
+arch-chroot /mnt export ROOTPART=$root_partition && ./chroot-install.sh
 
 # reboot
 reboot
