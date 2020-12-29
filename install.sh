@@ -21,9 +21,15 @@ fdisk -l
 echo ""
 # Root partition /
 read -p "Select partition to install base system: " root_partition
+
 # EFI partition
-read -p "EFI partition: " efi_partition
-read -p 'Should EFI partition be formatted? [y/N] ' format_efi
+read -p "Are you installing this system in UEFI mode? [Y/n]" use_efi
+if [ $use_efi == "y" ] 
+then
+    read -p "EFI partition: " efi_partition
+    read -p 'Should EFI partition be formatted? [y/N] ' format_efi
+fi
+
 # Swap partition
 read -p 'Should swap be used? [y/N] ' use_swap
 if [ $use_swap == "y" ] 
@@ -33,7 +39,21 @@ fi
 
 
 # === Formating ===
-mkfs.btrfs -f -L ArchLinux $root_partition
+echo "Which Filesystem should be used to / partition?"
+echo "   1. ext4"
+echo "   2. btrfs"
+read -p "Filesystem: " fs_type
+
+if [ $fs_type == "1" ] 
+then
+    mkfs.ext4 $root_partition
+fi
+
+if [ $fs_type == "2" ] 
+then
+    mkfs.btrfs -f -L ArchLinux $root_partition
+fi
+
 if [ $use_swap == "y" ] 
 then
     mkswap $swap_partition
@@ -58,7 +78,7 @@ cat /etc/pacman.d/mirrorlist >> br_mirrors
 mv br_mirrors /etc/pacman.d/mirrorlist
 
 # === Installation ===
-pacstrap /mnt base linux linux-firmware
+pacstrap /mnt base base-devel linux linux-firmware
 
 # === System config ===
 
