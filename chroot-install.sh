@@ -69,8 +69,10 @@ if [ "$gpu_type" == "intel" ]
 then
     pacman -Sy --noconfirm xf86-video-intel mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver libva-intel-driver
 elif [ "$gpu_type" == "amd" ]
+then
     pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 elif [ "$gpu_type" == "nivida" ]
+then
 
 fi
 
