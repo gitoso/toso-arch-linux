@@ -29,7 +29,9 @@ systemctl start NetworkManager.service
 mkinitcpio -P
 
 # Root Password
-echo "$u_ROOTPASS" | passwd --stdin root
+echo "----------------"
+echo "Password for ROOT"
+passwd
 
 # Micro-code
 if [ "$cpu_type" == "intel" ]
@@ -54,7 +56,9 @@ fi
 
 # User management
 useradd -m -G adm,ftp,games,http,log,rfkill,sys,systemd-journal,uucp,wheel,lp $u_USERNAME
-echo "$u_USERPASS" | passwd --stdin $u_USERNAME
+echo "----------------"
+echo "Password for user $u_USERNAME"
+passwd $u_USERNAME
 
 # Enable multilib
 sed -i '/#\[multilib\]/{N;s/\n#/\n/;P;D}' /etc/pacman.conf

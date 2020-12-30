@@ -17,33 +17,7 @@ timedatectl set-ntp true
 
 # === Ask User Questions ===
 read -p "Hostname: " u_HOSTNAME
-while true
-do
-    read -p "Root Password: " u_ROOTPASS
-    read -p "Root Password Confirmation: " u_ROOTPASSCONFIRM
-    if [ "$u_ROOTPASS" != "" ]
-    then
-        if [ "$u_ROOTPASS" == "$u_ROOTPASSCONFIRM" ]
-        then
-            break
-        fi
-    fi
-    echo "Invalid Confirmation"
-done
 read -p "Username: " u_USERNAME
-while true
-do
-    read -p "User Password: " u_USERPASS
-read -p "User Password Confirmation: " u_USERPASSCONFIRM
-    if [ "$u_USERPASS" != "" ]
-    then
-        if [ "$u_USERPASS" == "$u_USERPASSCONFIRM" ]
-        then
-            break
-        fi
-    fi
-    echo "Invalid Confirmation"
-done
 
 # Machine Info
 while true
@@ -198,6 +172,7 @@ echo "Hostname: $u_HOSTNAME"
 echo "Username: $u_USERNAME"
 echo "CPU Brand: $cpu_type"
 echo "GPU Brand: $gpu_type"
+echo "Install GUI: $install_gui"
 echo ""
 echo "Use EFI: $use_efi"
 if [ $use_efi == "true" ]
@@ -270,8 +245,6 @@ echo "KEYBOARD_LAYOUT=$KEYBOARD_LAYOUT" > /mnt/environment
 echo "KEYBOARD_VARIANT=$KEYBOARD_VARIANT" >> /mnt/environment
 echo "u_HOSTNAME=$u_HOSTNAME" >> /mnt/environment
 echo "u_USERNAME=$u_USERNAME" >> /mnt/environment
-echo "u_USERPASS=$u_USERPASS" >> /mnt/environment
-echo "u_ROOTPASS=$u_ROOTPASS" >> /mnt/environment
 echo "cpu_type=$cpu_type" >> /mnt/environment
 echo "gpu_type=$gpu_type" >> /mnt/environment
 echo "use_efi=$use_efi" >> /mnt/environment
