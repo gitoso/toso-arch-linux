@@ -1,75 +1,80 @@
 # === Parameters ===
 KEYBOARD_LAYOUT=us
 KEYBOARD_VARIANT=altgr-intl
-u_HOSTNAME=TESTE
-u_USERNAME=gitoso
 
-# === User Config ===
-#read -p "System Hostname: " u_HOSTNAME
-#read -p "Username: " u_USERNAME
+# === Import Env Variables ===
+source environment
+rm environment
 
-# Time Zone
-ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
-hwclock --systohc
+echo "--- Summary ---"
+echo ""
+echo "Hostname: $u_HOSTNAME"
+echo "Username: $u_USERNAME"
+echo "CPU Brand: $cpu_type"
+echo "GPU Brand: $gpu_type"
 
-# Localization
-sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
-locale-gen
-echo "LANG=en_US.UTF-8"         >> /etc/locale.conf
-echo "KEYMAP=$KEYBOARD_LAYOUT"  >> /etc/vconsole.conf 
+# # Time Zone
+# ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
+# hwclock --systohc
 
-# /etc/hostname
-echo "$u_HOSTNAME" >> /etc/hostname
+# # Localization
+# sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
+# locale-gen
+# echo "LANG=en_US.UTF-8"         >> /etc/locale.conf
+# echo "KEYMAP=$KEYBOARD_LAYOUT"  >> /etc/vconsole.conf 
 
-# /etc/hosts
-echo "127.0.0.1	localhost"                           >> /etc/hosts
-echo "::1		localhost"                           >> /etc/hosts
-echo "127.0.1.1	$u_HOSTNAME.localdomain	$u_HOSTNAME" >> /etc/hosts
+# # /etc/hostname
+# echo "$u_HOSTNAME" >> /etc/hostname
 
-# NetworkManager
-pacman -S --noconfirm networkmanager nm-connection-editor network-manager-applet
-systemctl enable NetworkManager.service
-systemctl start NetworkManager.service
+# # /etc/hosts
+# echo "127.0.0.1	localhost"                           >> /etc/hosts
+# echo "::1		localhost"                           >> /etc/hosts
+# echo "127.0.1.1	$u_HOSTNAME.localdomain	$u_HOSTNAME" >> /etc/hosts
 
-# Initramfs
-mkinitcpio -P
+# # NetworkManager
+# pacman -S --noconfirm networkmanager nm-connection-editor network-manager-applet
+# systemctl enable NetworkManager.service
+# systemctl start NetworkManager.service
 
-# Root Password
-echo "--- ROOT PASSWORD ---"
-passwd
+# # Initramfs
+# mkinitcpio -P
 
-# Micro-code
-pacman -S --noconfirm amd-ucode intel-ucode
+# # Root Password
+# echo "--- ROOT PASSWORD ---"
+# passwd
 
-# Boot Loader (GRUB)
-pacman -S --noconfirm grub efibootmgr os-prober ntfs-3g
-grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
+# # Micro-code
+# pacman -S --noconfirm amd-ucode intel-ucode
 
-# User management
-useradd -m -G adm,ftp,games,http,log,rfkill,sys,systemd-journal,uucp,wheel,lp $u_USERNAME
-echo "--- Senha para o usuário $u_USERNAME ---"
-passwd $u_USERNAME
+# # Boot Loader (GRUB)
+# pacman -S --noconfirm grub efibootmgr os-prober ntfs-3g
+# grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+# grub-mkconfig -o /boot/grub/grub.cfg
 
-# Enable multilib
-sed -i '/#\[multilib\]/{N;s/\n#/\n/;P;D}' /etc/pacman.conf
-sed -i "s/#\[multilib\]/\[multilib\]/g"   /etc/pacman.conf
+# # User management
+# useradd -m -G adm,ftp,games,http,log,rfkill,sys,systemd-journal,uucp,wheel,lp $u_USERNAME
+# echo "--- Senha para o usuário $u_USERNAME ---"
+# passwd $u_USERNAME
 
-# Driver install
-#pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
-pacman -Sy --noconfirm xf86-video-intel mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver libva-intel-driver
+# # Enable multilib
+# sed -i '/#\[multilib\]/{N;s/\n#/\n/;P;D}' /etc/pacman.conf
+# sed -i "s/#\[multilib\]/\[multilib\]/g"   /etc/pacman.conf
 
-# Sudo install & config
-pacman -S --noconfirm sudo
-echo "$u_USERNAME ALL=(ALL) ALL" >> /etc/sudoers
+# # Driver install
+# #pacman -Sy --noconfirm xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+# pacman -Sy --noconfirm xf86-video-intel mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver libva-intel-driver
 
-# Utilities install
-pacman -S --noconfirm vim git
+# # Sudo install & config
+# pacman -S --noconfirm sudo
+# echo "$u_USERNAME ALL=(ALL) ALL" >> /etc/sudoers
 
-# Call user config script
-chown $u_USERNAME user-install.sh
-cp user-install.sh /home/$u_USERNAME/user-install.sh
-su - $u_USERNAME -c "./user-install.sh"
+# # Utilities install
+# pacman -S --noconfirm vim git
 
-# End installation
-exit
+# # Call user config script
+# chown $u_USERNAME user-install.sh
+# cp user-install.sh /home/$u_USERNAME/user-install.sh
+# su - $u_USERNAME -c "./user-install.sh"
+
+# # End installation
+# exit
