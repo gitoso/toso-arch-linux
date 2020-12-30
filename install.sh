@@ -89,6 +89,22 @@ do
     clear
 done
 
+while true
+do
+    echo "----------------"
+    read -p "Should a basic GUI (XOrg + i3-gaps) be installed ? [Y/n] " install_gui_input
+    if [ "$install_gui_input" == "y" ] || [ "$install_gui_input" == "Y" ] || [ "$install_gui_input" == "" ]
+    then
+        install_gui="true"
+        break
+    elif [ "$install_gui_input" == "n" ] || [ "$install_gui_input" == "N" ]
+    then
+        install_gui="false"
+        break
+    fi
+    echo "Invalid option"
+done
+
 # === Partitioning ===
 clear
 echo 'These are your disks'
@@ -100,6 +116,7 @@ read -p "Select partition to install base system: " root_partition
 # EFI partition
 while true
 do
+    echo "----------------"
     read -p "Are you installing this system in UEFI mode? [Y/n] " use_efi_input
     if [ "$use_efi_input" == "y" ] || [ "$use_efi_input" == "Y" ] || [ "$use_efi_input" == "" ]
     then
@@ -109,15 +126,17 @@ do
     elif [ "$use_efi_input" == "n" ] || [ "$use_efi_input" == "N" ]
     then
         use_efi="false"
+        read -p "GRUB disk (e.g. /dev/sda): " grub_disk
         break
     fi
-    clear
+    echo "Invalid option"
 done
 
 if [ $use_efi == "true" ] ;
 then
     while true
     do
+        echo "----------------"
         read -p 'Should EFI partition be formatted? [y/N] ' format_efi_input
         if [ "$format_efi_input" == "y" ] || [ "$format_efi_input" == "Y" ] || [ "$format_efi_input" == "" ]
         then
@@ -128,13 +147,14 @@ then
             format_efi="false"
             break
         fi
-        clear
+        echo "Invalid option"
     done
 fi
 
 # Swap partition
 while true
 do
+    echo "----------------"
     read -p 'Should swap be used? [y/N] ' use_swap_input
     if [ "$use_swap_input" == "y" ] || [ "$use_swap_input" == "Y" ]
     then
@@ -146,13 +166,14 @@ do
         use_swap="false"
         break
     fi
-    clear
+    echo "Invalid option"
 done
 
 
 # === Formating ===
 while true
 do
+    echo "----------------"
     echo "Which Filesystem should be used to / partition?"
     echo "   1. ext4"
     echo "   2. btrfs"
@@ -166,7 +187,7 @@ do
         fs_type="btrfs"
         break
     fi
-    clear
+    echo "Invalid option"
 done
 
 # === Confirm before continue ===
@@ -182,6 +203,8 @@ echo "Use EFI: $use_efi"
 if [ $use_efi == "true" ]
 then
     echo "EFI Partition: $efi_partition"
+else
+    echo "GRUB disk: $grub_disk" 
 fi
 echo ""
 echo "Use SWAP: $use_swap"
@@ -243,12 +266,17 @@ pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # ENV
-echo "u_HOSTNAME=$u_HOSTNAME" > /mnt/environment
+echo "KEYBOARD_LAYOUT=$KEYBOARD_LAYOUT" > /mnt/environment
+echo "KEYBOARD_VARIANT=$KEYBOARD_VARIANT" >> /mnt/environment
+echo "u_HOSTNAME=$u_HOSTNAME" >> /mnt/environment
 echo "u_USERNAME=$u_USERNAME" >> /mnt/environment
 echo "u_USERPASS=$u_USERPASS" >> /mnt/environment
 echo "u_ROOTPASS=$u_ROOTPASS" >> /mnt/environment
 echo "cpu_type=$cpu_type" >> /mnt/environment
 echo "gpu_type=$gpu_type" >> /mnt/environment
+echo "use_efi=$use_efi" >> /mnt/environment
+echo "grub_disk=$grub_disk" >> /mnt/environment
+echo "install_gui=$install_gui" >> /mnt/environment
 
 # chroot
 cp /root/toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
