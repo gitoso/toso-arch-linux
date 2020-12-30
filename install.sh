@@ -48,6 +48,7 @@ done
 # Machine Info
 while true
 do
+    echo "----------------"
     echo "CPU Brand?"
     echo "   1. Intel"
     echo "   2. AMD"
@@ -66,6 +67,7 @@ done
 
 while true
 do
+    echo "----------------"
     echo "GPU Brand?"
     echo "   1. Intel"
     echo "   2. Nvidia"
@@ -94,7 +96,6 @@ fdisk -l
 echo ""
 # Root partition /
 read -p "Select partition to install base system: " root_partition
-clear
 
 # EFI partition
 while true
@@ -255,4 +256,4 @@ cp /root/toso-arch-linux/user-install.sh /mnt/user-install.sh
 arch-chroot /mnt ./chroot-install.sh
 
 # reboot
-reboot
+#reboot
