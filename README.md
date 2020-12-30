@@ -14,12 +14,11 @@ Esse script de instalação faz algumas suposições:
 
 O sistema base é composto de:
 * Bootloader: GRUB
-* Sistema de Arquivos: BRTFS
-* Servidor gráfico: X.Org
-* Window Manager: i3-gaps
-* Shell: Zsh
-    * Com framework oh-my-zsh
-    * Com tema ...
+* Sistema de Arquivos: BRTFS ou EXT4
+* Servidor gráfico: X.Org (opcional)
+* Window Manager: i3-gaps (opcional)
+* Processador Intel ou AMD
+* GPU Intel, AMD ou Nvidia
 
 ### Instruções
 Bootar uma .iso do Arch e executar:
