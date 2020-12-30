@@ -253,7 +253,7 @@ echo "install_gui=$install_gui" >> /mnt/environment
 
 # chroot
 cp /root/toso-arch-linux/chroot-install.sh /mnt/chroot-install.sh
-cp /root/toso-arch-linux/user-install.sh /mnt/user-install.sh
+cp /root/toso-arch-linux/.xinitrc /mnt/.xinitrc
 arch-chroot /mnt ./chroot-install.sh
 
 # reboot
