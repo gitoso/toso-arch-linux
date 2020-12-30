@@ -257,4 +257,4 @@ cp /root/toso-arch-linux/.xinitrc /mnt/.xinitrc
 arch-chroot /mnt ./chroot-install.sh
 
 # reboot
-#reboot
+reboot
